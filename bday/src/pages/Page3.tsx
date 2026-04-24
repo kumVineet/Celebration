@@ -1,8 +1,10 @@
 import { useState } from "react";
 import Confetti from "../components/Confetti";
+import ClothesLine from "../components/ClothesLine";
 import type { PageProps } from "../types/pageProps";
 import TenorGif from "../components/TenorGif";
 import config from "../config";
+import pics from "../pics";
 
 const Page3 = ({ onNext }: PageProps) => {
   const [phase, setPhase] = useState(0);
@@ -18,6 +20,38 @@ const Page3 = ({ onNext }: PageProps) => {
     >
       <Confetti active={phase >= 1} />
 
+      <ClothesLine
+        visible={phase >= 0}
+        leftImage={
+          <img
+            src={pics.img1527}
+            style={{ width: "100%", height: "100%", objectFit: "contain" }}
+          />
+        }
+        rightImage={
+          <img
+            src={pics.img1529}
+            style={{ width: "100%", height: "100%", objectFit: "contain" }}
+          />
+        }
+      />
+
+      <ClothesLine
+        visible={phase >= 1}
+        leftImage={
+          <img
+            src={pics.img1481}
+            style={{ width: "100%", height: "100%", objectFit: "contain" }}
+          />
+        }
+        rightImage={
+          <img
+            src={pics.img1528}
+            style={{ width: "100%", height: "100%", objectFit: "contain" }}
+          />
+        }
+      />
+
       {/* ✅ CENTERED CONTENT */}
       <div
         style={{
@@ -26,6 +60,8 @@ const Page3 = ({ onNext }: PageProps) => {
           alignItems: "center",
           justifyContent: "center",
           textAlign: "center",
+          position: "relative",
+          zIndex: 10,
         }}
       >
         <div>
@@ -149,13 +185,7 @@ const Page3 = ({ onNext }: PageProps) => {
         <button
           className="btn bnext"
           onClick={onNext}
-          style={{
-            position: "fixed",
-            right: 32,
-            bottom: 32,
-            zIndex: 200,
-            animation: "fadeIn .6s ease",
-          }}
+          style={{ animation: "fadeIn .6s ease" }}
         >
           Next →
         </button>

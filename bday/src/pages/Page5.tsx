@@ -4,7 +4,8 @@ import Confetti from "../components/Confetti";
 import TenorGif from "../components/TenorGif";
 import type { PageProps } from "../types/pageProps";
 import config from "../config";
-
+import pics from "../pics";
+import ClothesLine from "../components/ClothesLine";
 
 const Page5 = ({ onNext }: PageProps) => {
   const [stage, setStage] = useState(0);
@@ -22,8 +23,39 @@ const Page5 = ({ onNext }: PageProps) => {
     <div className="scene">
       <Confetti active={stage >= 3} />
 
+      <ClothesLine
+        visible={stage < 2}
+        leftImage={
+          <img
+            src={pics.img1527}
+            style={{ width: "100%", height: "100%", objectFit: "contain" }}
+          />
+        }
+        rightImage={
+          <img
+            src={pics.img1529}
+            style={{ width: "100%", height: "100%", objectFit: "contain" }}
+          />
+        }
+      />
+
+      <ClothesLine
+        visible={stage >= 2}
+        leftImage={
+          <img
+            src={pics.img1527}
+            style={{ width: "100%", height: "100%", objectFit: "contain" }}
+          />
+        }
+        rightImage={
+          <img
+            src={pics.img1529}
+            style={{ width: "100%", height: "100%", objectFit: "contain" }}
+          />
+        }
+      />
+
       <div style={{ textAlign: "center", maxWidth: 900, padding: 20 }}>
-        
         {/* 🎁 STEP 1 — GIFT */}
         {stage < 2 && (
           <div style={{ animation: "slideUp .7s ease both" }}>
@@ -156,15 +188,8 @@ const Page5 = ({ onNext }: PageProps) => {
                       left: `${25 + i * 12}%`,
                       bottom: 180,
                       fontSize: 22 + i * 6,
-                      color: [
-                        "#f48fb1",
-                        "#e91e8c",
-                        "#ff9eb5",
-                        "#c2185b",
-                      ][i],
-                      animation: `heartPop 1.6s ${
-                        i * 0.2
-                      }s ease-out infinite`,
+                      color: ["#f48fb1", "#e91e8c", "#ff9eb5", "#c2185b"][i],
+                      animation: `heartPop 1.6s ${i * 0.2}s ease-out infinite`,
                     }}
                   >
                     {h}
@@ -177,8 +202,7 @@ const Page5 = ({ onNext }: PageProps) => {
               <div style={{ marginTop: 20 }}>
                 <div
                   style={{
-                    background:
-                      "linear-gradient(135deg,#f48fb1,#e91e8c)",
+                    background: "linear-gradient(135deg,#f48fb1,#e91e8c)",
                     color: "white",
                     padding: "10px 28px",
                     borderRadius: 50,
@@ -190,25 +214,27 @@ const Page5 = ({ onNext }: PageProps) => {
                 >
                   🎂 Happy Birthday {config.recipientName}!! 🎂
                 </div>
-
-                {/* 👉 NEW BUTTON */}
-                <div>
-                  <button
-                    className="btn byes"
-                    onClick={onNext}
-                    style={{
-                      marginTop: 10,
-                      animation: "fadeIn .6s ease both",
-                    }}
-                  >
-                    One more thing... 💌
-                  </button>
-                </div>
               </div>
             )}
           </div>
         )}
       </div>
+
+      {stage >= 3 && (
+        <button
+          className="btn bnext"
+          onClick={onNext}
+          style={{
+            animation: "slideUp .6s ease both",
+            bottom: 200,
+            right: 32,
+            position: "fixed",
+            zIndex: 300,
+          }}
+        >
+          One more thing... 💌
+        </button>
+      )}
     </div>
   );
 };

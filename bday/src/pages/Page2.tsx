@@ -46,6 +46,7 @@ const Page2 = ({ onBack }: PageProps) => {
             url="https://media.tenor.com/8GCu2NPPLocAAAAj/%E5%B0%8F%E7%86%8A%E4%B8%8E%E5%B0%8F%E7%86%8A%E7%8C%AB.gif"
             width={260}
             height={260}
+            clean
           />
 
           {/* Button */}

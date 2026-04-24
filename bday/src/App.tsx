@@ -14,7 +14,19 @@ type PageProps = {
   onNext?: () => void;
 };
 
-// 👉 animation variants (Instagram-style)
+// ✅ MUST match PAGES length
+const ROUTES = [
+  "hello",
+  "oops",
+  "yay",
+  "letter",
+  "memories",
+  "surprise",
+  "hug",
+  "delivery",
+];
+
+// 👉 animation variants
 const variants = {
   enter: (direction: number) => ({
     x: direction > 0 ? "100%" : "-100%",
@@ -31,18 +43,19 @@ const variants = {
 };
 
 function App() {
+  // ✅ Read from URL path instead of query
   const [cur, setCur] = useState<number>(() => {
-    const params = new URLSearchParams(window.location.search);
-    const page = params.get("page");
-    return page ? parseInt(page, 10) : 0;
+    const path = window.location.pathname.replace("/", "");
+    const index = ROUTES.indexOf(path);
+    return index !== -1 ? index : 0;
   });
 
   const [direction, setDirection] = useState(1);
   const [busy, setBusy] = useState(false);
 
-  // 👉 sync with URL
+  // ✅ Set initial URL (no ?page=)
   useEffect(() => {
-    window.history.replaceState({ page: cur }, "", `?page=${cur}`);
+    window.history.replaceState({ page: cur }, "", `/${ROUTES[cur]}`);
   }, []);
 
   const goTo = (n: number) => {
@@ -52,18 +65,22 @@ function App() {
     setBusy(true);
 
     setCur(n);
-    window.history.pushState({ page: n }, "", `?page=${n}`);
+
+    // ✅ push clean route
+    window.history.pushState({ page: n }, "", `/${ROUTES[n]}`);
 
     setTimeout(() => setBusy(false), 500);
   };
 
-  // 👉 browser back/forward
+  // ✅ browser back/forward support
   useEffect(() => {
-    const handlePopState = (e: PopStateEvent) => {
-      const page = e.state?.page;
-      if (page !== undefined) {
-        setDirection(page > cur ? 1 : -1);
-        setCur(page);
+    const handlePopState = () => {
+      const path = window.location.pathname.replace("/", "");
+      const index = ROUTES.indexOf(path);
+
+      if (index !== -1) {
+        setDirection(index > cur ? 1 : -1);
+        setCur(index);
       }
     };
 
@@ -96,9 +113,9 @@ function App() {
     >
       <FloatingBg />
       <HeartCursor />
-      <FloatingGif /> 
+      <FloatingGif />
 
-      {/* 🔥 Story-like transitions */}
+      {/* 🔥 Story transitions */}
       <AnimatePresence custom={direction} mode="wait">
         <motion.div
           key={cur}
@@ -116,13 +133,11 @@ function App() {
             width: "100%",
             height: "100%",
           }}
-
-          // 👉 swipe support (mobile feel)
           drag="x"
           dragConstraints={{ left: 0, right: 0 }}
           onDragEnd={(e, info) => {
-            if (info.offset.x < -100) goTo(cur + 1); // swipe left → next
-            if (info.offset.x > 100) goTo(cur - 1);  // swipe right → back
+            if (info.offset.x < -100) goTo(cur + 1);
+            if (info.offset.x > 100) goTo(cur - 1);
           }}
         >
           {Cur && <Cur {...props[cur]} />}
@@ -130,7 +145,6 @@ function App() {
       </AnimatePresence>
 
       <FloralStrip />
-
     </div>
   );
 }

@@ -30,3 +30,6 @@ dist-ssr
 *.sw?
 
 .DS_Store
+
+src/assets/pic
+src/pics.ts

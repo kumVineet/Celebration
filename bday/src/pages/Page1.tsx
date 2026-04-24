@@ -3,16 +3,8 @@ import { Lily, Rose, Tulip } from "../components/svg";
 import type { PageProps } from "../types/pageProps";
 import TenorGif from "../components/TenorGif";
 import config from "../config";
-
-const taunts = [
-  "No 😏",
-  "Are you sure?",
-  "Really??",
-  "Don't do this",
-  "Say yes pls 🥺",
-  "Nope!",
-  "Try again 😈",
-];
+import ClothesLine from "../components/ClothesLine";
+import pics from "../pics";
 
 // Initial position: below-right of center (matches the old CSS calc values)
 const getInitialPos = () => ({
@@ -28,14 +20,13 @@ const Page1 = ({ onYes, onNo }: PageProps) => {
 
   const [noPos, setNoPos] = useState(getInitialPos);
   const [yesExpanded, setYesExpanded] = useState(false);
-  const [tauntIndex, setTauntIndex] = useState(0);
   const [hideNo, setHideNo] = useState(false);
 
   // On reload, clear the flag so button reappears
   useEffect(() => {
-    const nav = performance.getEntriesByType(
-      "navigation"
-    )[0] as PerformanceNavigationTiming | undefined;
+    const nav = performance.getEntriesByType("navigation")[0] as
+      | PerformanceNavigationTiming
+      | undefined;
     if (nav?.type === "reload") {
       sessionStorage.removeItem("cameFromNo");
     }
@@ -99,7 +90,10 @@ const Page1 = ({ onYes, onNo }: PageProps) => {
         let ny = p.y - Math.sin(angle) * STEP;
 
         nx = Math.max(MARGIN, Math.min(window.innerWidth - BW - MARGIN, nx));
-        ny = Math.max(MARGIN, Math.min(window.innerHeight - BH - MARGIN, ny));
+        ny = Math.max(
+          MARGIN,
+          Math.min(window.innerHeight - 168 - BH - MARGIN, ny),
+        );
 
         targetRef.current = { x: nx, y: ny };
 
@@ -107,7 +101,6 @@ const Page1 = ({ onYes, onNo }: PageProps) => {
           hasMovedRef.current = true;
           setYesExpanded(true);
         }
-        setTauntIndex((i) => (i + 1) % taunts.length);
       }
     };
 
@@ -136,6 +129,22 @@ const Page1 = ({ onYes, onNo }: PageProps) => {
         <Rose size={52} color="#c2185b" />
       </div>
 
+      <ClothesLine
+        visible={true}
+        leftImage={
+          <img
+            src={pics.img1524}
+            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+          />
+        }
+        rightImage={
+          <img
+            src={pics.img1526}
+            style={{ width: "100%", height: "100%", objectFit: "contain" }}
+          />
+        }
+      />
+
       {/* Card */}
       <div
         className="glass"
@@ -157,8 +166,8 @@ const Page1 = ({ onYes, onNo }: PageProps) => {
         <h1 className="t-hero" style={{ marginTop: 20 }}>
           Hey {config.recipientName}!!
         </h1>
-        <p className="t-script" style={{ fontSize: "1.8rem" }}>
-          I made something just for you.
+        <p className="t-script" style={{ fontSize: "1.8rem", marginTop: 10 }}>
+          I made something for you.
         </p>
         <p className="t-body" style={{ marginBottom: 30 }}>
           Do you want to see?
@@ -191,7 +200,7 @@ const Page1 = ({ onYes, onNo }: PageProps) => {
             transition: "none",
           }}
         >
-          {taunts[tauntIndex]}
+          No 😏
         </button>
       )}
     </div>
