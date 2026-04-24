@@ -1,0 +1,216 @@
+import { useState } from "react";
+import { Lily, Rose, GiftBoxSvg } from "../components/svg";
+import Confetti from "../components/Confetti";
+import TenorGif from "../components/TenorGif";
+import type { PageProps } from "../types/pageProps";
+import config from "../config";
+
+
+const Page5 = ({ onNext }: PageProps) => {
+  const [stage, setStage] = useState(0);
+
+  const handleTap = () => {
+    if (stage !== 0) return;
+
+    setStage(1);
+
+    setTimeout(() => setStage(2), 1200); // show hug
+    setTimeout(() => setStage(3), 2500); // hearts + confetti
+  };
+
+  return (
+    <div className="scene">
+      <Confetti active={stage >= 3} />
+
+      <div style={{ textAlign: "center", maxWidth: 900, padding: 20 }}>
+        
+        {/* 🎁 STEP 1 — GIFT */}
+        {stage < 2 && (
+          <div style={{ animation: "slideUp .7s ease both" }}>
+            <h2
+              className="t-title"
+              style={{
+                marginBottom: 20,
+                animation: "heartbeat 2s infinite",
+              }}
+            >
+              🎁 A little surprise for you!!
+            </h2>
+
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                gap: 14,
+                marginBottom: 8,
+              }}
+            >
+              <div style={{ animation: "floatBob 2s infinite" }}>
+                <Rose size={48} color="#e91e8c" />
+              </div>
+
+              <div
+                onClick={handleTap}
+                style={{
+                  cursor: stage === 0 ? "pointer" : "default",
+                  animation:
+                    stage === 0
+                      ? "giftFloat 2.5s ease-in-out infinite"
+                      : "none",
+                }}
+              >
+                <GiftBoxSvg open={stage >= 1} />
+              </div>
+
+              <div style={{ animation: "floatBob 2.2s .4s infinite" }}>
+                <Lily size={48} />
+              </div>
+            </div>
+
+            {stage === 0 && (
+              <p
+                className="t-script"
+                style={{
+                  marginTop: 8,
+                  animation: "pulse 1.5s infinite",
+                  fontSize: "1.4rem",
+                }}
+              >
+                Tap to open 🎀
+              </p>
+            )}
+
+            {stage === 1 && (
+              <p
+                className="t-script"
+                style={{
+                  marginTop: 8,
+                  color: "#e91e8c",
+                  animation: "bounceIn .5s ease both",
+                  fontSize: "1.6rem",
+                }}
+              >
+                🎉 Yayyyy!!!
+              </p>
+            )}
+          </div>
+        )}
+
+        {/* 💖 STEP 2 — HUG */}
+        {stage >= 2 && (
+          <div
+            style={{
+              animation: "fadeIn .8s ease forwards",
+              marginTop: 20,
+            }}
+          >
+            {/* Title */}
+            <div
+              className="glass"
+              style={{
+                marginBottom: 20,
+                padding: "22px 44px",
+                animation: "slideUp .6s ease both",
+              }}
+            >
+              <h2
+                className="t-title"
+                style={{
+                  animation: "heartbeat 2s infinite",
+                }}
+              >
+                A virtual hug for you!! 🤗
+              </h2>
+
+              <p className="t-script" style={{ color: "#b5174b" }}>
+                with love 💕
+              </p>
+            </div>
+
+            {/* GIF */}
+            <div style={{ position: "relative" }}>
+              <div
+                style={{
+                  width: 340,
+                  height: 280,
+                  margin: "0 auto",
+                  borderRadius: 28,
+                  overflow: "hidden",
+                  animation: "popIn .6s ease",
+                }}
+              >
+                <TenorGif
+                  url="https://media.tenor.com/_1xqhO5RzVYAAAAj/i-miss-you-bear-milk-and-mocha.gif"
+                  width="100%"
+                  height="100%"
+                />
+              </div>
+
+              {/* Floating hearts */}
+              {stage >= 3 &&
+                ["♥", "💕", "♡", "💖"].map((h, i) => (
+                  <span
+                    key={i}
+                    style={{
+                      position: "absolute",
+                      left: `${25 + i * 12}%`,
+                      bottom: 180,
+                      fontSize: 22 + i * 6,
+                      color: [
+                        "#f48fb1",
+                        "#e91e8c",
+                        "#ff9eb5",
+                        "#c2185b",
+                      ][i],
+                      animation: `heartPop 1.6s ${
+                        i * 0.2
+                      }s ease-out infinite`,
+                    }}
+                  >
+                    {h}
+                  </span>
+                ))}
+            </div>
+
+            {/* Birthday tag */}
+            {stage >= 3 && (
+              <div style={{ marginTop: 20 }}>
+                <div
+                  style={{
+                    background:
+                      "linear-gradient(135deg,#f48fb1,#e91e8c)",
+                    color: "white",
+                    padding: "10px 28px",
+                    borderRadius: 50,
+                    display: "inline-block",
+                    fontFamily: "'Dancing Script',cursive",
+                    fontSize: "1.3rem",
+                    fontWeight: 700,
+                  }}
+                >
+                  🎂 Happy Birthday {config.recipientName}!! 🎂
+                </div>
+
+                {/* 👉 NEW BUTTON */}
+                <div>
+                  <button
+                    className="btn byes"
+                    onClick={onNext}
+                    style={{
+                      marginTop: 10,
+                      animation: "fadeIn .6s ease both",
+                    }}
+                  >
+                    One more thing... 💌
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default Page5;
