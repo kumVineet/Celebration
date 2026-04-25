@@ -20,6 +20,37 @@ body {
   overflow: hidden;
 }
 
+@media (max-width: 700px) {
+  html,
+  body,
+  #root {
+    height: auto;
+    min-height: 100%;
+    overflow: visible;
+  }
+  body {
+    overflow-x: hidden;
+    overflow-y: auto;
+    cursor: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .app-shell {
+    height: auto !important;
+    min-height: 100vh;
+    overflow: visible !important;
+  }
+  .page-motion {
+    position: relative !important;
+    height: auto !important;
+    min-height: 100vh;
+  }
+  .scene-wrap {
+    position: relative;
+    inset: auto;
+    overflow: visible;
+  }
+}
+
 /* polka dot bg */
 body::before {
   content: "";
@@ -183,7 +214,7 @@ body::before {
 }
 
 /* mobile overrides */
-@media (max-width: 600px) {
+@media (max-width: 700px) {
   .glass {
     padding: 18px 20px;
     border-radius: 20px;
@@ -197,6 +228,34 @@ body::before {
   .bcam {
     bottom: 168px;
     right: 16px;
+  }
+  /* Mobile: scene becomes a scrollable column instead of an absolute viewport.
+     Top padding clears the top polaroid (top:16 + ~244px tall + breathing room),
+     bottom padding clears the bottom polaroid + FloralStrip (148) + bottom polaroid (~250). */
+  .scene {
+    position: relative;
+    inset: auto;
+    min-height: 100vh;
+    height: auto;
+    justify-content: flex-start;
+    padding-top: 290px;
+    padding-bottom: 430px;
+    overflow: visible;
+  }
+  .letter-wrap {
+    width: calc(100% - 20px) !important;
+    max-width: none !important;
+    height: auto !important;
+    margin: 30px 10px !important;
+  }
+  .letter-card {
+    flex: none !important;
+    min-height: 0 !important;
+  }
+  .letter-body {
+    flex: none !important;
+    overflow-y: visible !important;
+    max-height: none !important;
   }
 }
 

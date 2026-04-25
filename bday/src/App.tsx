@@ -15,16 +15,7 @@ type PageProps = {
 };
 
 // ✅ MUST match PAGES length
-const ROUTES = [
-  "hello",
-  "oops",
-  "yay",
-  "letter",
-  "memories",
-  "surprise",
-  "hug",
-  "delivery",
-];
+const ROUTES = ["hello", "oops", "yay", "letter", "hug", "gift"];
 
 // 👉 animation variants
 const variants = {
@@ -104,6 +95,7 @@ function App() {
 
   return (
     <div
+      className="app-shell"
       style={{
         width: "100vw",
         height: "100vh",
@@ -128,6 +120,7 @@ function App() {
             x: { type: "spring", stiffness: 300, damping: 30 },
             opacity: { duration: 0.2 },
           }}
+          className="page-motion"
           style={{
             position: "absolute",
             width: "100%",

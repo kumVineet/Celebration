@@ -2,33 +2,32 @@ import { useEffect, useState } from "react";
 import TenorGif from "./TenorGif";
 
 const FloatingGif = () => {
-  const [size, setSize] = useState(80);
+  const [isMobile, setIsMobile] = useState(false);
 
-  // 📱 responsive size
   useEffect(() => {
-    const updateSize = () => {
-      setSize(window.innerWidth < 480 ? 60 : 80);
-    };
-
-    updateSize();
-    window.addEventListener("resize", updateSize);
-
-    return () => window.removeEventListener("resize", updateSize);
+    const update = () => setIsMobile(window.innerWidth < 700);
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
   }, []);
+
+  const size = isMobile ? 48 : 80;
+  const top = isMobile ? 8 : 40;
+  const sideOffset = isMobile ? 4 : 120;
+
+  const wrapperBase = {
+    position: "fixed" as const,
+    top,
+    width: size,
+    height: size,
+    zIndex: 9999,
+    pointerEvents: "none" as const,
+    animation: "fadeIn .6s ease",
+  };
 
   return (
     <>
-      {/* 👉 Top Left */}
-      <div
-        style={{
-          position: "fixed",
-          top: 40,
-          left: 120,
-          zIndex: 9999,
-          pointerEvents: "none",
-          animation: "fadeIn .6s ease",
-        }}
-      >
+      <div style={{ ...wrapperBase, left: sideOffset }}>
         <TenorGif
           url="https://media.tenor.com/xsTmm-84W8MAAAAi/tkthao219-bubududu.gif"
           width={size}
@@ -40,23 +39,13 @@ const FloatingGif = () => {
         />
       </div>
 
-      {/* 👉 Top Right (mirrored) */}
-      <div
-        style={{
-          position: "fixed",
-          top: 40,
-          right: 120,
-          zIndex: 9999,
-          pointerEvents: "none",
-          animation: "fadeIn .6s ease",
-        }}
-      >
+      <div style={{ ...wrapperBase, right: sideOffset }}>
         <TenorGif
           url="https://media.tenor.com/xsTmm-84W8MAAAAi/tkthao219-bubududu.gif"
           width={size}
           style={{
-            transform: "scaleX(-1)", // 👈 mirror
-            animation: "floatSoft 3.4s ease-in-out infinite", // slight variation
+            transform: "scaleX(-1)",
+            animation: "floatSoft 3.4s ease-in-out infinite",
             opacity: 0.9,
           }}
           clean

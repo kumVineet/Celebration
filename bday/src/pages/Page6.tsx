@@ -7,7 +7,7 @@ const Page6 = () => {
   const [address, setAddress] = useState("");
   const [typedText, setTypedText] = useState("");
 
-  const fullText = "Where should I send your surprise? 🥺";
+  const fullText = "Where should I send your Gift 🎁 ?";
 
   // ✨ typing effect
   useEffect(() => {
@@ -30,13 +30,22 @@ const Page6 = () => {
 
     // 📩 send to WhatsApp (replace with your number)
     const message = encodeURIComponent(`Address:\n${address}`);
-    window.open(`https://wa.me/${config.whatsappNumber}?text=${message}`, "_blank");
+    window.open(
+      `https://wa.me/${config.whatsappNumber}?text=${message}`,
+      "_blank",
+    );
 
     setTimeout(() => setStage(2), 2500);
   };
 
   return (
     <div className="scene">
+      <div className="glow">
+        <TenorGif
+          url="https://c.tenor.com/fLfRTACXL2cAAAAC/tenor.gif"
+          width={280}
+        />
+      </div>
       <div
         style={{
           textAlign: "center",
@@ -120,13 +129,6 @@ const Page6 = () => {
               Something sweet is on the way 🎂
             </h2>
 
-            <div className="glow">
-              <TenorGif
-                url="https://c.tenor.com/fLfRTACXL2cAAAAC/tenor.gif"
-                width={280}
-              />
-            </div>
-
             <p
               style={{
                 marginTop: 16,
@@ -135,7 +137,7 @@ const Page6 = () => {
                 fontFamily: "'Caveat',cursive",
               }}
             >
-              Got it… sending this to myself so I don’t mess it up 😄 <br />
+              Sending this to myself so I don’t mess it up 😄 <br />
               Just wait for it… 💖
             </p>
           </div>

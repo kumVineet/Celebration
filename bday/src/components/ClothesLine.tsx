@@ -2,90 +2,23 @@ import type { ReactNode } from "react";
 
 const PW = 180;
 const PH = 300;
-
-// String y at left/right anchor points (in the 1000×60 viewBox)
-const STRING_Y_LEFT = 18;
-const STRING_Y_RIGHT = 20;
-// Approximate y where the string dips near the polaroid positions (~8% and ~92% x)
-// Left polaroid hangs at ~8% x → string y ≈ 10 (see path control points)
-// Right polaroid hangs at ~92% x → string y ≈ 12
-// We'll use the anchor y values since polaroids sit near the walls
-
-const Clip = () => (
-  <svg
-    width="14"
-    height="28"
-    viewBox="0 0 14 28"
-    style={{ display: "block", margin: "0 auto", flexShrink: 0 }}
-  >
-    {/* outer body */}
-    <rect
-      x="3"
-      y="0"
-      width="8"
-      height="18"
-      rx="2.5"
-      fill="#b03020"
-      opacity=".9"
-    />
-    {/* inner highlight */}
-    <rect
-      x="4.5"
-      y="1.5"
-      width="5"
-      height="13"
-      rx="1.5"
-      fill="#e05040"
-      opacity=".55"
-    />
-    {/* jaw bottom bar */}
-    <rect
-      x="2"
-      y="16"
-      width="10"
-      height="4"
-      rx="1.5"
-      fill="#7a1f14"
-      opacity=".95"
-    />
-    {/* spring coil suggestion */}
-    <ellipse cx="7" cy="9" rx="1.5" ry="1.5" fill="#fff" opacity=".18" />
-    {/* pin that pierces the string — rendered below the jaw */}
-    <line
-      x1="7"
-      y1="20"
-      x2="7"
-      y2="28"
-      stroke="#c0392b"
-      strokeWidth="1.5"
-      opacity=".6"
-    />
-  </svg>
-);
-
-const StringLine = ({ fromY, toY }: { fromY: number; toY: number }) => (
-  <line
-    x1="7"
-    y1={fromY}
-    x2="7"
-    y2={toY}
-    stroke="#c0392b"
-    strokeWidth="1.2"
-    opacity=".5"
-    strokeDasharray="2 2"
-  />
-);
+const PW_MOBILE = 120;
+const PH_MOBILE = 200;
 
 const Polaroid = ({
   image,
   label,
   rot,
   delay,
+  width = PW,
+  height = PH,
 }: {
   image: ReactNode;
   label: string;
   rot: number;
   delay: string;
+  width?: number;
+  height?: number;
 }) => (
   <div
     style={{
@@ -103,7 +36,6 @@ const Polaroid = ({
       viewBox="0 0 14 44"
       style={{ display: "block", margin: "0 auto", flexShrink: 0 }}
     >
-      {/* clip body */}
       <rect
         x="3"
         y="0"
@@ -132,7 +64,6 @@ const Polaroid = ({
         opacity=".95"
       />
       <ellipse cx="7" cy="9" rx="1.5" ry="1.5" fill="#fff" opacity=".18" />
-      {/* thread from clip jaw to polaroid top */}
       <line
         x1="7"
         y1="20"
@@ -145,11 +76,10 @@ const Polaroid = ({
       />
     </svg>
 
-    {/* Polaroid card */}
     <div
       style={{
-        width: PW,
-        height: PH, // ✅ IMPORTANT: parent must have height
+        width,
+        height,
         background: "white",
         borderRadius: 3,
         boxShadow: "0 8px 32px rgba(0,0,0,.20), 0 2px 6px rgba(0,0,0,.12)",
@@ -160,7 +90,6 @@ const Polaroid = ({
         transformOrigin: "top center",
       }}
     >
-      {/* photo area */}
       <div
         style={{
           flex: "0 0 90%",
@@ -176,7 +105,6 @@ const Polaroid = ({
       >
         {image ?? "📸"}
       </div>
-      {/* caption */}
       <p
         style={{
           flex: "0 0 10%",
@@ -198,7 +126,6 @@ const Polaroid = ({
 );
 
 export type ClothesLineProps = {
-  /** Whether to show the clothesline (e.g. tie to a phase state) */
   visible: boolean;
   leftImage?: ReactNode;
   leftLabel?: string;
@@ -217,7 +144,7 @@ const ClothesLine = ({
 
   return (
     <>
-      {/* ── Desktop clothesline ── */}
+      {/* ── Desktop: horizontal wavy string with two polaroids ── */}
       <div
         className="clothesline-wrap"
         style={{
@@ -228,7 +155,6 @@ const ClothesLine = ({
           animation: "fadeIn .9s .2s ease both",
         }}
       >
-        {/* Wavy string — sits at ~30% from top of the available area */}
         <svg
           style={{
             position: "absolute",
@@ -257,7 +183,6 @@ const ClothesLine = ({
               />
             </filter>
           </defs>
-          {/* Catenary string */}
           <path
             d="M0,18 C80,8 180,40 300,28 C420,16 460,12 500,20 C540,28 580,44 700,32 C820,20 920,8 1000,20"
             fill="none"
@@ -267,10 +192,8 @@ const ClothesLine = ({
             opacity=".6"
             filter="url(#stringShadow)"
           />
-          {/* Wall anchors */}
           <circle cx="0" cy="18" r="5" fill="#f48fb1" opacity=".8" />
           <circle cx="1000" cy="20" r="5" fill="#f48fb1" opacity=".8" />
-          {/* Tiny hearts along string */}
           {[170, 370, 620, 830].map((x, i) => (
             <text
               key={i}
@@ -285,14 +208,12 @@ const ClothesLine = ({
           ))}
         </svg>
 
-        {/* Left polaroid — anchored so clip top aligns with string */}
         <div
           className="clothesline-left"
           style={{
             position: "absolute",
             top: "clamp(80px, 28vh, 220px)",
             left: "clamp(16px, 7vw, 120px)",
-            // shift up by clip height (44px) so clip top = string top
             marginTop: -2,
           }}
         >
@@ -304,7 +225,6 @@ const ClothesLine = ({
           />
         </div>
 
-        {/* Right polaroid */}
         <div
           className="clothesline-right"
           style={{
@@ -323,46 +243,106 @@ const ClothesLine = ({
         </div>
       </div>
 
-      {/* ── Mobile: stacked polaroids (no string) ── */}
+      {/* ── Mobile: vertical wavy string overlay (full page height) with polaroids stuck to it ── */}
       <div
-        className="clothesline-mobile-left"
-        style={{ animation: "slideUp .7s .1s ease both" }}
+        className="clothesline-vertical"
+        style={{
+          animation: "fadeIn .9s .2s ease both",
+        }}
       >
-        <Polaroid
-          image={leftImage}
-          label={leftLabel ?? ""}
-          rot={-3}
-          delay="0s"
-        />
-      </div>
-      <div
-        className="clothesline-mobile-right"
-        style={{ animation: "slideUp .7s .3s ease both" }}
-      >
-        <Polaroid
-          image={rightImage}
-          label={rightLabel ?? ""}
-          rot={3}
-          delay="0.5s"
-        />
+        <svg
+          className="clothesline-vertical-string"
+          viewBox="0 0 60 1000"
+          preserveAspectRatio="none"
+        >
+          <defs>
+            <filter
+              id="vStringShadow"
+              x="-50%"
+              y="-20%"
+              width="200%"
+              height="140%"
+            >
+              <feDropShadow
+                dx="2"
+                dy="0"
+                stdDeviation="2"
+                floodColor="#c2185b"
+                floodOpacity=".18"
+              />
+            </filter>
+          </defs>
+          <path
+            d="M30,0 C20,200 40,400 30,500 C20,600 40,800 30,1000"
+            fill="none"
+            stroke="#e91e8c"
+            strokeWidth="2"
+            strokeLinecap="round"
+            opacity=".6"
+            filter="url(#vStringShadow)"
+          />
+          <circle cx="30" cy="0" r="5" fill="#f48fb1" opacity=".8" />
+          <circle cx="30" cy="1000" r="5" fill="#f48fb1" opacity=".8" />
+        </svg>
+
+        {/* Top polaroid: clip touches the very top of the string */}
+        <div className="clothesline-vertical-top">
+          <Polaroid
+            image={leftImage}
+            label={leftLabel ?? ""}
+            rot={-3}
+            delay="0s"
+            width={PW_MOBILE}
+            height={PH_MOBILE}
+          />
+        </div>
+        {/* Bottom polaroid: clip touches near the bottom of the string */}
+        <div className="clothesline-vertical-bottom">
+          <Polaroid
+            image={rightImage}
+            label={rightLabel ?? ""}
+            rot={3}
+            delay="0.6s"
+            width={PW_MOBILE}
+            height={PH_MOBILE}
+          />
+        </div>
       </div>
 
       <style>{`
         .clothesline-left, .clothesline-right { display: block; }
-        .clothesline-mobile-left, .clothesline-mobile-right { display: none; }
+        .clothesline-vertical { display: none; }
 
         @media (max-width: 700px) {
           .clothesline-wrap { display: none; }
-          .clothesline-mobile-left {
+          .clothesline-vertical {
+            display: block;
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 1;
+          }
+          .clothesline-vertical-string {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 100%;
+          }
+          /* Polaroid wrapper is a flex column with the clip + photo both centered.
+             So horizontally centering the wrapper puts the clip pin on the string. */
+          .clothesline-vertical-top,
+          .clothesline-vertical-bottom {
+            position: absolute;
+            left: 0;
+            right: 0;
             display: flex;
             justify-content: center;
-            margin-bottom: 10px;
           }
-          .clothesline-mobile-right {
-            display: flex;
-            justify-content: center;
-            margin-top: 10px;
-          }
+          .clothesline-vertical-top { top: 16px; }
+          .clothesline-vertical-bottom { bottom: 30px; }
         }
       `}</style>
     </>

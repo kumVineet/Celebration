@@ -18,15 +18,9 @@ const Page4 = ({ onNext }: PageProps) => {
 
   return (
     <div
+      className="scene"
       style={{
-        position: "absolute",
-        inset: 0,
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
         padding: "clamp(12px, 3vw, 24px)",
-        overflow: "hidden",
       }}
     >
       {/* ── Envelope phase ── */}
@@ -157,16 +151,16 @@ const Page4 = ({ onNext }: PageProps) => {
       )}
 
       <ClothesLine
-        visible={phase >= 0}
+        visible={phase < 2}
         leftImage={
           <img
-            src={pics.img1527}
+            src={pics.img1534}
             style={{ width: "100%", height: "100%", objectFit: "contain" }}
           />
         }
         rightImage={
           <img
-            src={pics.img1529}
+            src={pics.img1535}
             style={{ width: "100%", height: "100%", objectFit: "contain" }}
           />
         }
@@ -176,13 +170,13 @@ const Page4 = ({ onNext }: PageProps) => {
         visible={phase >= 2}
         leftImage={
           <img
-            src={pics.img1527}
+            src={pics.img1533}
             style={{ width: "100%", height: "100%", objectFit: "contain" }}
           />
         }
         rightImage={
           <img
-            src={pics.img1529}
+            src={pics.img1536}
             style={{ width: "100%", height: "100%", objectFit: "contain" }}
           />
         }
@@ -191,6 +185,7 @@ const Page4 = ({ onNext }: PageProps) => {
       {/* ── Letter phase ── */}
       {phase >= 2 && (
         <div
+          className="letter-wrap"
           style={{
             width: "80%",
             maxWidth: 700,
@@ -213,6 +208,7 @@ const Page4 = ({ onNext }: PageProps) => {
           >
             {/* Letter card */}
             <div
+              className="letter-card"
               style={{
                 flex: 1,
                 minHeight: 0,
@@ -257,6 +253,7 @@ const Page4 = ({ onNext }: PageProps) => {
 
               {/* Scrollable body */}
               <div
+                className="letter-body"
                 style={{
                   flex: 1,
                   minHeight: 0,
@@ -320,10 +317,23 @@ const Page4 = ({ onNext }: PageProps) => {
       {/* Memories button */}
       {phase >= 3 && (
         <button
-          className="btn bcam"
           onClick={onNext}
           style={{
-            animation: "fadeIn .6s ease",
+            position: "fixed",
+            bottom: 170,
+            right: 20,
+            zIndex: 300,
+            border: "none",
+            padding: "clamp(10px,1.5vw,13px) clamp(22px,3vw,38px)",
+            borderRadius: 50,
+            fontFamily: "'Dancing Script',cursive",
+            fontSize: "clamp(1rem,1.8vw,1.25rem)",
+            fontWeight: 700,
+            cursor: "pointer",
+            background: "linear-gradient(135deg,#f9a825,#f57f17)",
+            color: "#fff",
+            boxShadow: "0 4px 22px rgba(245,127,23,.45)",
+            animation: "slideUp .6s ease both, heartbeat 2.2s 0.7s infinite",
           }}
         >
           Surprise

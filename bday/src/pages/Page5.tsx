@@ -27,13 +27,13 @@ const Page5 = ({ onNext }: PageProps) => {
         visible={stage < 2}
         leftImage={
           <img
-            src={pics.img1527}
+            src={pics.img1531}
             style={{ width: "100%", height: "100%", objectFit: "contain" }}
           />
         }
         rightImage={
           <img
-            src={pics.img1529}
+            src={pics.img1530}
             style={{ width: "100%", height: "100%", objectFit: "contain" }}
           />
         }
@@ -43,13 +43,13 @@ const Page5 = ({ onNext }: PageProps) => {
         visible={stage >= 2}
         leftImage={
           <img
-            src={pics.img1527}
+            src={pics.img1532}
             style={{ width: "100%", height: "100%", objectFit: "contain" }}
           />
         }
         rightImage={
           <img
-            src={pics.img1529}
+            src={pics.img1523}
             style={{ width: "100%", height: "100%", objectFit: "contain" }}
           />
         }
@@ -153,18 +153,14 @@ const Page5 = ({ onNext }: PageProps) => {
               >
                 A virtual hug for you!! 🤗
               </h2>
-
-              <p className="t-script" style={{ color: "#b5174b" }}>
-                with love 💕
-              </p>
             </div>
 
             {/* GIF */}
             <div style={{ position: "relative" }}>
               <div
                 style={{
-                  width: 340,
-                  height: 280,
+                  width: 420,
+                  height: 340,
                   margin: "0 auto",
                   borderRadius: 28,
                   overflow: "hidden",
@@ -204,11 +200,11 @@ const Page5 = ({ onNext }: PageProps) => {
                   style={{
                     background: "linear-gradient(135deg,#f48fb1,#e91e8c)",
                     color: "white",
-                    padding: "10px 28px",
+                    padding: "16px 48px",
                     borderRadius: 50,
                     display: "inline-block",
                     fontFamily: "'Dancing Script',cursive",
-                    fontSize: "1.3rem",
+                    fontSize: "1.69rem",
                     fontWeight: 700,
                   }}
                 >
@@ -222,14 +218,23 @@ const Page5 = ({ onNext }: PageProps) => {
 
       {stage >= 3 && (
         <button
-          className="btn bnext"
           onClick={onNext}
           style={{
-            animation: "slideUp .6s ease both",
-            bottom: 200,
-            right: 32,
             position: "fixed",
+            bottom: 170,
+            right: 20,
             zIndex: 300,
+            border: "none",
+            padding: "clamp(10px,1.5vw,13px) clamp(22px,3vw,38px)",
+            borderRadius: 50,
+            fontFamily: "'Dancing Script',cursive",
+            fontSize: "clamp(1rem,1.8vw,1.25rem)",
+            fontWeight: 700,
+            cursor: "pointer",
+            background: "linear-gradient(135deg,#f9a825,#f57f17)",
+            color: "#fff",
+            boxShadow: "0 4px 22px rgba(245,127,23,.45)",
+            animation: "slideUp .6s ease both, heartbeat 2.2s 0.7s infinite",
           }}
         >
           One more thing... 💌
