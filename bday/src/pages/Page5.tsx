@@ -27,13 +27,13 @@ const Page5 = ({ onNext }: PageProps) => {
         visible={stage < 2}
         leftImage={
           <img
-            src={pics.img1531}
+            src={pics.img10}
             style={{ width: "100%", height: "100%", objectFit: "contain" }}
           />
         }
         rightImage={
           <img
-            src={pics.img1530}
+            src={pics.img11}
             style={{ width: "100%", height: "100%", objectFit: "contain" }}
           />
         }
@@ -43,13 +43,13 @@ const Page5 = ({ onNext }: PageProps) => {
         visible={stage >= 2}
         leftImage={
           <img
-            src={pics.img1532}
+            src={pics.img12}
             style={{ width: "100%", height: "100%", objectFit: "contain" }}
           />
         }
         rightImage={
           <img
-            src={pics.img1523}
+            src={pics.img13}
             style={{ width: "100%", height: "100%", objectFit: "contain" }}
           />
         }

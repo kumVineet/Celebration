@@ -31,13 +31,13 @@ const Page3 = ({ onNext }: PageProps) => {
         visible={phase < 1}
         leftImage={
           <img
-            src={pics.img1527}
+            src={pics.img3}
             style={{ width: "100%", height: "100%", objectFit: "contain" }}
           />
         }
         rightImage={
           <img
-            src={pics.img1529}
+            src={pics.img4}
             style={{ width: "100%", height: "100%", objectFit: "contain" }}
           />
         }
@@ -59,7 +59,7 @@ const Page3 = ({ onNext }: PageProps) => {
         }
         rightImage={
           <img
-            src={pics.img1537}
+            src={pics.img5}
             style={{ width: "100%", height: "100%", objectFit: "contain" }}
           />
         }
@@ -122,7 +122,12 @@ const Page3 = ({ onNext }: PageProps) => {
                   );
                 })}
 
-                <svg width="180" height="200" viewBox="0 0 180 200" style={{ overflow: "visible" }}>
+                <svg
+                  width="180"
+                  height="200"
+                  viewBox="0 0 180 200"
+                  style={{ overflow: "visible" }}
+                >
                   <defs>
                     <linearGradient id="boxBody" x1="0" x2="0" y1="0" y2="1">
                       <stop offset="0%" stopColor="#ff5fa8" />

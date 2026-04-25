@@ -154,13 +154,13 @@ const Page4 = ({ onNext }: PageProps) => {
         visible={phase < 2}
         leftImage={
           <img
-            src={pics.img1534}
+            src={pics.img6}
             style={{ width: "100%", height: "100%", objectFit: "contain" }}
           />
         }
         rightImage={
           <img
-            src={pics.img1535}
+            src={pics.img7}
             style={{ width: "100%", height: "100%", objectFit: "contain" }}
           />
         }
@@ -170,13 +170,13 @@ const Page4 = ({ onNext }: PageProps) => {
         visible={phase >= 2}
         leftImage={
           <img
-            src={pics.img1533}
+            src={pics.img8}
             style={{ width: "100%", height: "100%", objectFit: "contain" }}
           />
         }
         rightImage={
           <img
-            src={pics.img1536}
+            src={pics.img9}
             style={{ width: "100%", height: "100%", objectFit: "contain" }}
           />
         }

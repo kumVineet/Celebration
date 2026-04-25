@@ -133,13 +133,13 @@ const Page1 = ({ onYes, onNo }: PageProps) => {
         visible={true}
         leftImage={
           <img
-            src={pics.img1524}
+            src={pics.img1}
             style={{ width: "100%", height: "100%", objectFit: "cover" }}
           />
         }
         rightImage={
           <img
-            src={pics.img1526}
+            src={pics.img2}
             style={{ width: "100%", height: "100%", objectFit: "contain" }}
           />
         }
